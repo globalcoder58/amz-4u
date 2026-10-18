@@ -10,10 +10,10 @@
     citations?: Citation[];
   }
 
-  let messages: Message[] = [];
-  let input = '';
-  let loading = false;
-  let conversationId = createConversationId();
+  let messages = $state<Message[]>([]);
+  let input = $state('');
+  let loading = $state(false);
+  let conversationId = $state(createConversationId());
   let chatContainer: HTMLDivElement;
 
   function createConversationId(): string {
@@ -159,30 +159,34 @@
   }
 
   // Auto-scroll to bottom as text streams in
-  $: if (messages.length && chatContainer) {
-    setTimeout(
-      () => chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' }),
-      50
-    );
-  }
+  $effect(() => {
+    if (messages.length && chatContainer) {
+      const container = chatContainer;
+      const timeout = setTimeout(
+        () => container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' }),
+        50
+      );
+      return () => clearTimeout(timeout);
+    }
+  });
 </script>
 
 <div class="chat-wrapper">
   <div class="chat-header">
-    <h2>💬 Chat with Lorelyn</h2>
+    <h2>💬 Chat with us</h2>
     <div class="header-actions">
-      <button class="save-share-btn" on:click={saveAndShare} disabled={messages.length === 0 || loading}>
+      <button class="save-share-btn" onclick={saveAndShare} disabled={messages.length === 0 || loading}>
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
-        Save & Share
+        Speichern & Teilen
       </button>
-      <button class="new-chat-btn" on:click={newChat} disabled={loading}>New Chat</button>
+      <button class="new-chat-btn" onclick={newChat} disabled={loading}>Neuer Chat</button>
     </div>
   </div>
 
   <div class="chat-messages" bind:this={chatContainer}>
     {#if messages.length === 0}
       <div class="empty-state">
-        
+        <p>👋 <strong>Hallo! Ich bin Kim.</strong><br />Haben Sie Fragen zu Urlaubsverfall, Fristen oder Urteilen von BAG &amp; EuGH? Schreiben Sie mir einfach.</p>
       </div>
     {/if}
 
@@ -222,12 +226,12 @@
   <div class="chat-input">
     <textarea
       bind:value={input}
-      on:keydown={handleKeydown}
+      onkeydown={handleKeydown}
       placeholder="Type your message..."
       rows="1"
       disabled={loading}
     ></textarea>
-    <button on:click={sendMessage} disabled={loading || !input.trim()}>
+    <button onclick={sendMessage} disabled={loading || !input.trim()}>
       {loading ? '...' : 'Send'}
     </button>
   </div>

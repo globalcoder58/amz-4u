@@ -1,5 +1,5 @@
 {
-	"name": "svelte-urlaub-test",
+	"name": "ich-brauch-urlaub",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
@@ -23,5 +23,10 @@
 	"imports": {
 		"#lib": "./src/lib/index.js",
 		"#lib/*": "./src/lib/*"
+	},
+	"dependencies": {
+		"@genkit-ai/googleai": "^1.28.0",
+		"firebase-admin": "^14.5.0",
+		"genkit": "^1.42.0"
 	}
 }

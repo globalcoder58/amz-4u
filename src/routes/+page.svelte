@@ -1,7 +1,7 @@
 
-
-
-
+<script lang="ts">
+  import Chat from '../components/Chat.svelte';
+</script>
 
 <div class="page-shell">
   <main class="container">
@@ -24,12 +24,13 @@
 
       <p class="status-badge" aria-label="Lorelyn is available to chat">
         <span aria-hidden="true">●</span>
-        Available to chat
+       online
       </p>
+
     </section>
 
     <section id="chat" class="chat-section" aria-label="Chat with Lorelyn">
-      
+      <Chat />
     </section> 
 
     <aside class="ai-disclosure" aria-label="AI and privacy notice">
@@ -49,8 +50,15 @@
       <h2 id="about-heading">Deutsches Arbeitsrecht</h2>
 
       <p>
-        Ich habe die wesentlichen Entscheidungen des BAG und EuGH übersichtlich aufbereitet. Gibt es dazu noch bestimmte Punkte, die Sie für Ihr Schreiben 
-        an den Betriebsrat genauer ausarbeiten möchten?
+       Das deutsche Arbeitsrecht schützt Arbeitnehmer durch klare Regelungen 
+       zu Kündigungsschutz, Mindestlohn, Arbeitszeiten, Urlaub und 
+       Entgeltfortzahlung im Krankheitsfall. 
+       Es sichert faire Arbeitsbedingungen, 
+       schützt vor Diskriminierung und 
+       stärkt die Mitbestimmungsrechte der 
+       Beschäftigten. Arbeitnehmer haben Rechte, 
+       die ihre Würde, Gesundheit und finanzielle Sicherheit
+        im Berufsleben gewährleisten.
       </p>
 
       <div class="topic-list" aria-label="Suggested discussion topics">
@@ -63,14 +71,11 @@
   </main>
 
  <footer class="footer">
-    <p class="technology-credit">Created with AWS Bedrock and SvelteKit.</p>
+    <p class="technology-credit">Created with SvelteKit and deployed on Google Firebase</p>
 
     <nav class="footer-links" aria-label="Footer navigation">
       <a href="/privacy">Privacy</a>
      
-      <a href="https://uspekhi.web.app/contact" target="_blank" rel="noopener noreferrer">
-        Contact / Report a concern
-      </a>
     </nav>
 
     <p class="creator-credit">

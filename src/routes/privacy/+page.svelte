@@ -10,7 +10,7 @@
 <script>
   // Bei einer anderen Startseiten-Route diesen Pfad entsprechend ändern.
   const starterPage = "/";
-  const contactEmail = "[uspekhiwebdesign@gmail.com]";
+  const contactEmail = "uspekhiwebdesign@gmail.com";
   
 </script>
 
@@ -126,6 +126,7 @@
 <style>
   :global(html) { scroll-behavior: smooth; }
   :global(body) {
+    min-width: 320px;
     margin: 0;
     background: radial-gradient(ellipse at top right, #142b49 0, #0b1220 52%);
     color: #edf4ff;
@@ -136,6 +137,7 @@
   .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
   .back {
     display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px;
+    min-height: 44px;
     border: 1px solid #2a3a50; border-radius: 10px; background: #182437;
     color: #edf4ff; text-decoration: none; font-weight: 650;
   }
@@ -155,7 +157,17 @@
   ul { padding-left: 22px; }
   footer { text-align: center; color: #b8c8dc; font-size: .9rem; padding-top: 16px; }
   @media (max-width: 520px) {
-    .topbar { align-items: flex-start; flex-direction: column; }
-    .updated { text-align: left; }
+    .container {
+      width: min(900px, calc(100% - 1.5rem - env(safe-area-inset-left) - env(safe-area-inset-right)));
+      padding: 16px 0 calc(32px + env(safe-area-inset-bottom));
+    }
+    .topbar { align-items: flex-start; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .back { padding-inline: 12px; }
+    .updated { text-align: left; font-size: .82rem; }
+    header, section { padding: 18px 16px; margin-bottom: 12px; border-radius: 14px; }
+    h1 { font-size: clamp(1.8rem, 8vw, 2.4rem); line-height: 1.12; }
+    h2 { font-size: clamp(1.2rem, 5.2vw, 1.4rem); line-height: 1.3; }
+    h3 { line-height: 1.4; }
+    ul { padding-left: 20px; }
   }
 </style>

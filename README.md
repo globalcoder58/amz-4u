@@ -54,3 +54,17 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+## Deploying the chat backend
+
+Firebase Hosting serves the static SvelteKit build. The `/api/chat` endpoint runs as a
+Firebase HTTPS Function and requires the `GEMINI_API_KEY` secret:
+
+```sh
+firebase functions:secrets:set GEMINI_API_KEY
+npm run build
+firebase deploy --only functions,hosting
+```
+
+The Firebase project must have billing enabled for Cloud Functions. The function uses
+the default runtime service account to read the Firestore knowledge collections.

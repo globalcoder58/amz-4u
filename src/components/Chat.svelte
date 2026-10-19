@@ -45,6 +45,9 @@
       });
 
       if (!response.ok) throw new Error('Failed to get response');
+      if (!response.headers.get('content-type')?.includes('text/event-stream')) {
+        throw new Error('The chat server returned an unexpected response.');
+      }
       if (!response.body) throw new Error('No response body');
 
       const reader = response.body.getReader();
@@ -320,9 +323,11 @@
     flex: 1;
     flex-direction: column;
     gap: 0.85rem;
-    min-height: 260px;
+    min-height: 0;
     overflow-y: auto;
     padding: 1.25rem;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: rgba(169, 223, 242, 0.35) transparent;
   }
@@ -536,41 +541,53 @@
 
   @media (max-width: 560px) {
     .chat-wrapper {
-      min-height: 400px;
-      max-height: 650px;
+      min-height: min(400px, calc(100dvh - 1rem));
+      max-height: min(600px, calc(100dvh - 1rem));
     }
 
     .chat-header {
-      padding: 0.9rem 1rem;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      padding: 0.75rem;
     }
 
     .chat-header h2 {
+      min-width: 0;
       font-size: 0.95rem;
     }
 
+    .header-actions {
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.4rem;
+      margin-left: auto;
+    }
+
     .new-chat-btn, .save-share-btn {
-      padding-inline: 0.7rem;
+      min-height: 44px;
+      padding-inline: 0.65rem;
       font-size: 0.8rem;
     }
 
     .chat-messages {
-      min-height: 250px;
-      padding: 1rem;
+      padding: 0.8rem;
     }
 
     .message-bubble {
-      max-width: 88%;
-      font-size: 0.94rem;
+      max-width: 92%;
+      font-size: 0.96rem;
     }
 
     .chat-input {
-      flex-direction: column;
       align-items: stretch;
-      padding: 0.9rem 1rem 1rem;
+      gap: 0.5rem;
+      padding: 0.65rem 0.75rem calc(0.65rem + env(safe-area-inset-bottom));
     }
 
     .chat-input button {
-      width: 100%;
+      min-width: 72px;
+      min-height: 46px;
+      padding-inline: 0.8rem;
     }
   }
 

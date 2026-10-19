@@ -104,6 +104,7 @@
   :global(body) {
     min-width: 320px;
     min-height: 100vh;
+    min-height: 100svh;
     margin: 0;
     color: #f8fafc;
     font-family:
@@ -132,6 +133,7 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-height: 100svh;
   }
 
   .container {
@@ -339,25 +341,55 @@
   @media (max-width: 560px) {
     .container {
       width: min(100% - 1.25rem, 1040px);
-      padding-top: 2.25rem;
+      padding-top: clamp(1.5rem, 7svh, 2.25rem);
+      padding-bottom: 1.25rem;
+    }
+
+    .hero {
+      gap: 0.9rem;
     }
 
     h1 {
-      font-size: clamp(2.35rem, 13vw, 3.6rem);
+      font-size: clamp(2.2rem, 11.5vw, 3.6rem);
       letter-spacing: -0.045em;
     }
 
     .tagline {
-      font-size: 1.02rem;
-      line-height: 1.65;
+      font-size: clamp(1rem, 4vw, 1.08rem);
+      line-height: 1.55;
     }
 
-    .about-section {
-      padding: 1.25rem;
+    .avatar {
+      width: clamp(112px, 32vw, 148px);
+      height: clamp(112px, 32vw, 148px);
+      margin-top: 0.15rem;
+    }
+
+    .chat-section {
+      margin-top: clamp(1.25rem, 5vw, 2rem);
+      border-radius: 14px;
     }
 
     .ai-disclosure {
-      padding: 0.8rem 0.9rem;
+      margin-top: 0.75rem;
+      font-size: 0.86rem;
+    }
+
+    .about-section {
+      margin-top: clamp(2rem, 8vw, 3rem);
+      padding: 1.1rem;
+    }
+
+    .footer {
+      width: min(100% - 1.25rem, 1040px);
+      padding: 1.5rem 0 calc(1.5rem + env(safe-area-inset-bottom));
+    }
+
+    .footer-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 0.25rem 0.4rem;
     }
   }
 

@@ -11,7 +11,7 @@
       </h1>
 
       <p class="tagline">
-       Dringende Unterstützung erforderlich: Systemseitig blockierter Resturlaub (19 Tage) / Drohender Verfall
+       Dringende Unterstützung erforderlich: Systemseitig blockierter Resturlaub (17 Tage) / Drohender Verfall
       </p>
 
       <img
@@ -74,7 +74,7 @@
     <p class="technology-credit">Created with SvelteKit and deployed on Google Firebase</p>
 
     <nav class="footer-links" aria-label="Footer navigation">
-      <a href="/privacy">Privacy</a>
+      <a href="/privacy">Datenschutz</a>
      
     </nav>
 

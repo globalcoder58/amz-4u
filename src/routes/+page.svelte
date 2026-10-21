@@ -32,6 +32,10 @@ Whether you're starting from scratch or planning your next big move, AMAZON 4 U 
        online
       </p>
 
+      <p>👋 <strong>💬 Meet Jeff, your AI-powered guide to the Amazon marketplace. .
+
+      </strong><br />Ask questions, explore strategies, and take the guesswork out of your first steps</p>
+
     </section>
 
     <section id="chat" class="chat-section" aria-label="Chat with Lorelyn">
@@ -42,20 +46,14 @@ Whether you're starting from scratch or planning your next big move, AMAZON 4 U 
       <span class="disclosure-icon" aria-hidden="true">✦</span>
 
       <p>
-        Fulfillment by Amazon (FBA) is a service that lets sellers outsource their entire order fulfillment
-process to Amazon. Instead of packing and shipping products yourself, Amazon handles everything:
+       Start smart. Learn as you go. Build with confidence.
       </p>
     </aside>
 
     <section class="about-section" aria-labelledby="about-heading">
       <h2 id="about-heading">Amazon New Seller Incentives: Unlock Your Potential 🚀</h2>
 
-<p>
-  Ready to grow your Amazon business? Eligible new sellers can unlock
-  incentives worth up to €47,250. This is the maximum potential value,
-  not a guaranteed payout. Benefits are earned progressively by completing
-  qualifying actions and meeting Amazon's eligibility requirements.
-</p>
+
 
 <p>
   The biggest opportunity is the <strong>New Brand Bonus</strong>, which
@@ -68,13 +66,15 @@ process to Amazon. Instead of packing and shipping products yourself, Amazon han
 </p>
 
       <div class="topic-list" aria-label="Suggested discussion topics">
+         <span>The Complete
+History of Amazon</span>
+        
         <span>Amazon Entry Strategy</span>
         
-        <span>Brand</span>
-        <span>Entry Strategy</span>
-        <span>Flat file</span>
-        <span>The Complete
-History of Amazon</span>
+        <span>Brand Registry</span>
+        <span>Seller Incentives</span>
+        <span>How to upload a Flat file</span>
+       
       </div>
     </section>
   </main>
@@ -83,7 +83,7 @@ History of Amazon</span>
     <p class="technology-credit">Created with SvelteKit and deployed on Google Firebase</p>
 
     <nav class="footer-links" aria-label="Footer navigation">
-      <a href="/privacy">Datenschutz</a>
+      <a href="/privacy">Privacy Policy</a>
      
     </nav>
 

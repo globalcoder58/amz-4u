@@ -189,7 +189,7 @@
   <div class="chat-messages" bind:this={chatContainer}>
     {#if messages.length === 0}
       <div class="empty-state">
-        <p>👋 <strong>💬 Meet Jeff, your AI-powered guide to the Amazon marketplace. Ask questions, explore strategies, and take the guesswork out of your first steps.</strong><br />Start smart. Learn as you go. Build with confidence.</p>
+        
       </div>
     {/if}
 
@@ -245,8 +245,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 360px;
-  max-height: 560px;
+  min-height: 260px;
+  max-height: 460px;
   margin: 0 auto;
   overflow: hidden;
   color: #edf7ff;
@@ -322,7 +322,7 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.65rem;
     min-height: 0;
     overflow-y: auto;
     padding: 1.25rem;
@@ -333,7 +333,7 @@
   }
 
   .chat-messages::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
 
   .chat-messages::-webkit-scrollbar-track {
@@ -350,12 +350,12 @@
   .empty-state {
     display: grid;
     flex: 1;
-    min-height: 120px;
+    min-height: 100px;
     place-items: center;
     padding: 1.5rem;
     color: #aebbd0;
-    font-size: 0.98rem;
-    line-height: 1.6;
+    font-size: 0.78rem;
+    line-height: 1.2;
     text-align: center;
   }
 
@@ -374,12 +374,12 @@
   }
 
   .message-bubble {
-    max-width: min(78%, 560px);
-    padding: 0.75rem 0.95rem;
+    max-width: min(58%, 360px);
+    padding: 0.55rem 0.65rem;
     border: 1px solid transparent;
     border-radius: 15px;
     font-size: 0.96rem;
-    line-height: 1.58;
+    line-height: 1.18;
     overflow-wrap: anywhere;
     box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
   }

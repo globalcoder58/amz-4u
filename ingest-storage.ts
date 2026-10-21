@@ -22,8 +22,8 @@ if (!apiKey) {
 // 2. Configure Firebase Admin Credentials
 const serviceAccountPath = resolve(process.cwd(), "serviceAccountKey.json");
 const appOptions: any = {
-  projectId: "ich-brauch-urlaub",
-  storageBucket: "ich-brauch-urlaub.firebasestorage.app",
+  projectId: "amz-4u",
+  storageBucket: "amz-4u.firebasestorage.app",
 };
 
 if (existsSync(serviceAccountPath)) {
@@ -35,7 +35,7 @@ if (existsSync(serviceAccountPath)) {
 } else {
   console.error("\n❌ Error: Firebase Admin Service Account key is required to access Storage & Firestore.");
   console.error("To generate and save your key:");
-  console.error("  1. Open Firebase Console: https://console.firebase.google.com/project/ich-brauch-urlaub/settings/serviceaccounts/adminsdk");
+  console.error("  1. Open Firebase Console: https://console.firebase.google.com/project/amz-4u/settings/serviceaccounts/adminsdk");
   console.error("  2. Click 'Generate new private key' and download the JSON file.");
   console.error("  3. Rename it to 'serviceAccountKey.json' and place it in:");
   console.error(`     ${serviceAccountPath}\n`);
@@ -50,10 +50,16 @@ const db = getFirestore();
 const bucket = getStorage().bucket();
 
 const filesToProcess = [
-  "amazon_arbeitsrecht_praxis_klagen.md",
-  "bag_urteile_urlaubsverfall.md",
-  "eugh_urteile_urlaubsverfall.md",
-  "k_ndigungsschutzklage_praxis_fristen.md",
+  "amazon_brand_registry_de.pdf",
+  "amazon_brand_registry_en.pdf",
+  "amazon_business_is_it_worth_it_en.pdf",
+  "amazon_business_lohnt_es_sich_de.pdf",
+  "amazon_complete_history.pdf",
+  "amazon_de_top10_de.pdf",
+  "amazon_de_top10_en.pdf",
+  "amazon_fba_guide_en.pdf",
+  "amazon_germany_2026.pdf",
+  "amazon_geschichte_DE.pdf"
 ];
 
 async function runIngestion() {

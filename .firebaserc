@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "ich-brauch-urlaub"
-  }
+    "default": "ich-brauch-urlaub",
+    "staging": "amz-4u"
+  },
+  "targets": {},
+  "etags": {}
 }

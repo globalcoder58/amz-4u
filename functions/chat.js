@@ -8,7 +8,24 @@ const envFile = [resolve(process.cwd(), '.env'), resolve(process.cwd(), '..', '.
   (path) => existsSync(path),
 );
 if (envFile && process.loadEnvFile) {
-  process.loadEnvFile(envFile);
+  try {
+    process.loadEnvFile(envFile);
+  } catch {}
+}
+if (!process.env.GEMINI_API_KEY && envFile) {
+  try {
+    const rawEnv = readFileSync(envFile, 'utf-8');
+    for (const line of rawEnv.split(/\r?\n/)) {
+      const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+      if (match) {
+        const key = match[1];
+        let val = (match[2] || '').trim();
+        if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
+        if (val.startsWith("'") && val.endsWith("'")) val = val.slice(1, -1);
+        if (!process.env[key]) process.env[key] = val;
+      }
+    }
+  } catch {}
 }
 
 function getDb() {
@@ -41,6 +58,16 @@ async function getIndexedChunks(db) {
 
   // Updated collection list matching amz-4u Amazon documents
   const collections = [
+    'amazon_brand_registry_de.pdf',
+    'amazon_brand_registry_en.pdf',
+    'amazon_business_is_it_worth_it_en.pdf',
+    'amazon_business_lohnt_es_sich_de.pdf',
+    'amazon_complete_history.pdf',
+    'amazon_de_top10_de.pdf',
+    'amazon_de_top10_en.pdf',
+    'amazon_fba_guide_en.pdf',
+    'amazon_germany_2026.pdf',
+    'amazon_geschichte_DE.pdf',
     'amazon_brand_registry_de',
     'amazon_brand_registry_en',
     'amazon_business_is_it_worth_it_en',
@@ -54,9 +81,23 @@ async function getIndexedChunks(db) {
   ];
 
   const chunks = [];
-  for (const collection of collections) {
-    try {
-      const snapshot = await db.collection(collection).get();
+  try {
+    const snapshots = await Promise.all(
+      collections.map((col) =>
+        db
+          .collection(col)
+          .get()
+          .catch((err) => {
+            console.error(`Error loading collection ${col}:`, err);
+            return null;
+          }),
+      ),
+    );
+
+    for (let i = 0; i < collections.length; i++) {
+      const snapshot = snapshots[i];
+      if (!snapshot) continue;
+      const collection = collections[i];
       snapshot.forEach((doc) => {
         const data = doc.data();
         if (data.text && data.embedding) {
@@ -69,16 +110,16 @@ async function getIndexedChunks(db) {
 
           if (embedding) {
             chunks.push({
-              source: data.source || collection,
+              source: data.source || collection.replace(/\.pdf$/, ''),
               text: data.text,
               embedding,
             });
           }
         }
       });
-    } catch (error) {
-      console.error(`Error loading collection ${collection}:`, error);
     }
+  } catch (error) {
+    console.error('Error loading collections:', error);
   }
 
   cachedChunks = chunks;
@@ -117,14 +158,16 @@ export async function handleChatRequest(request) {
     if (!apiKey) {
       return new Response(JSON.stringify({ error: 'GEMINI_API_KEY is not configured' }), {
         status: 500,
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const db = getDb();
 
-    // ✅ FIXED: Using valid embedding model
-    const embedModel = genAI.getGenerativeModel({ model: 'text-embedding-004' });
+    // Valid embedding model
+    const embedModelName = process.env.GEMINI_EMBED_MODEL || 'gemini-embedding-001';
+    const embedModel = genAI.getGenerativeModel({ model: embedModelName });
     const embedRes = await embedModel.embedContent({
       content: { role: 'user', parts: [{ text: message }] },
       outputDimensionality: 768,
@@ -156,9 +199,10 @@ export async function handleChatRequest(request) {
       .map((chunk, index) => `[Dokument ${index + 1}: ${chunk.source}]\n${chunk.text}`)
       .join('\n\n---\n\n');
 
-    // ✅ FIXED: Using valid generative model
+    // Valid generative model
+    const modelName = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: modelName,
       systemInstruction: `Du bist Jeff, ein erfahrener, hilfsbereiter und hochkompetenter Experte für Amazon Marketplace, Brand Registry, Fulfillment by Amazon (FBA) sowie E-Commerce-Strategien in Deutschland und international.
 Du unterstützt Verkäufer und Händler dabei, ihre Amazon-Präsenz zu optimieren, Richtlinien einzuhalten und Marktstrategien erfolgreich umzusetzen.
 

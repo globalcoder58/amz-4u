@@ -141,14 +141,14 @@
     if (messages.length === 0) return;
     
     const chatText = messages
-      .map(m => `${m.role === 'user' ? 'You' : 'Lorelyn'}: ${m.content}`)
+      .map(m => `${m.role === 'user' ? 'You' : 'Jeff'}: ${m.content}`)
       .join('\n\n');
       
     const blob = new Blob([chatText], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `chat-with-Lorelyn-${new Date().toISOString().slice(0,10)}.txt`;
+    a.download = `chat-with-Jeff-${new Date().toISOString().slice(0,10)}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -176,7 +176,7 @@
 
 <div class="chat-wrapper">
   <div class="chat-header">
-    <h2>💬 Chat</h2>
+    <h2>💬 Chat with Jeff</h2>
     <div class="header-actions">
       <button class="save-share-btn" onclick={saveAndShare} disabled={messages.length === 0 || loading}>
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
@@ -189,7 +189,7 @@
   <div class="chat-messages" bind:this={chatContainer}>
     {#if messages.length === 0}
       <div class="empty-state">
-        
+        <p>Ask Jeff anything about Amazon Marketplace strategies, Brand Registry, or FBA guidelines.</p>
       </div>
     {/if}
 
@@ -354,8 +354,8 @@
     place-items: center;
     padding: 1.5rem;
     color: #aebbd0;
-    font-size: 0.78rem;
-    line-height: 1.2;
+    font-size: 0.85rem;
+    line-height: 1.4;
     text-align: center;
   }
 

@@ -39,11 +39,18 @@ async function getIndexedChunks(db) {
     return cachedChunks;
   }
 
+  // Updated collection list matching amz-4u Amazon documents
   const collections = [
-    'amazon_arbeitsrecht_praxis_klagen',
-    'bag_urteile_urlaubsverfall',
-    'eugh_urteile_urlaubsverfall',
-    'k_ndigungsschutzklage_praxis_fristen',
+    'amazon_brand_registry_de',
+    'amazon_brand_registry_en',
+    'amazon_business_is_it_worth_it_en',
+    'amazon_business_lohnt_es_sich_de',
+    'amazon_complete_history',
+    'amazon_de_top10_de',
+    'amazon_de_top10_en',
+    'amazon_fba_guide_en',
+    'amazon_germany_2026',
+    'amazon_geschichte_DE',
   ];
 
   const chunks = [];
@@ -115,7 +122,9 @@ export async function handleChatRequest(request) {
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const db = getDb();
-    const embedModel = genAI.getGenerativeModel({ model: 'gemini-embedding-001' });
+
+    // ✅ FIXED: Using valid embedding model
+    const embedModel = genAI.getGenerativeModel({ model: 'text-embedding-004' });
     const embedRes = await embedModel.embedContent({
       content: { role: 'user', parts: [{ text: message }] },
       outputDimensionality: 768,
@@ -134,7 +143,7 @@ export async function handleChatRequest(request) {
       topChunks.length > 0
         ? [
             {
-              text: 'Urlaubsrecht & Urteile (BAG / EuGH)',
+              text: 'Amazon Marketplace & FBA Guidelines',
               references: topChunks.map((chunk) => ({
                 source: chunk.source,
                 content: chunk.text,
@@ -147,16 +156,17 @@ export async function handleChatRequest(request) {
       .map((chunk, index) => `[Dokument ${index + 1}: ${chunk.source}]\n${chunk.text}`)
       .join('\n\n---\n\n');
 
+    // ✅ FIXED: Using valid generative model
     const model = genAI.getGenerativeModel({
-      model: 'gemini-3.8-flash',
-      systemInstruction: `Du bist Lorelyn, eine freundliche, empathische und rechtlich fundierte Assistentin für deutsches Arbeitsrecht, spezialisiert auf Urlaubsrecht, Urlaubsverfall, Rechtsprechung des Bundesarbeitsgerichts (BAG) und des Europäischen Gerichtshofs (EuGH) sowie Kündigungsschutz und Fristen.
-Du berätst Beschäftigte, die um ihren Resturlaub bangen oder Unterstützung für ein Schreiben an den Arbeitgeber oder Betriebsrat benötigen.
+      model: 'gemini-1.5-flash',
+      systemInstruction: `Du bist Jeff, ein erfahrener, hilfsbereiter und hochkompetenter Experte für Amazon Marketplace, Brand Registry, Fulfillment by Amazon (FBA) sowie E-Commerce-Strategien in Deutschland und international.
+Du unterstützt Verkäufer und Händler dabei, ihre Amazon-Präsenz zu optimieren, Richtlinien einzuhalten und Marktstrategien erfolgreich umzusetzen.
 
 Wichtige Richtlinien:
-- Antworte immer auf Deutsch, professionell, lösungsorientiert und verständlich.
-- Nutze die bereitgestellten Urteile und Kontextdokumente, um deine Aussagen mit BAG-/EuGH-Entscheidungen (z.B. Hinweis- und Aufforderungsobliegenheit des Arbeitgebers, Verjährung) zu untermauern.
-- Wenn der Nutzer um einen Briefentwurf oder Formulierungsvorschlag bittet (z.B. an den Betriebsrat oder Arbeitgeber), erstelle ein formelles, sofort verwendbares Musterschreiben mit Datum, Betreff, Begründung und Fristsetzung.
-- Gib den Hinweis, dass deine Auskunft eine Orientierung und Ersteinschätzung darstellt, aber keine anwaltliche Einzelberatung ersetzt.`,
+- Antworte professionell, präzise, lösungsorientiert und leicht verständlich.
+- Nutze primär die bereitgestellten Kontextdokumente und Wissensdatenbanken (z. B. Brand Registry Leitfäden, FBA Guides, Amazon Deutschland Analysen), um deine Aussagen fundiert zu belegen.
+- Falls die Anfrage auf Deutsch gestellt wird, antworte auf Deutsch. Falls sie auf Englisch gestellt wird, antworte auf Englisch.
+- Wenn der Nutzer nach konkreten Schritt-für-Schritt-Anleitungen oder Vorlagen fragt, erstelle strukturierte, sofort anwendbare Übersichten.`,
     });
 
     const prompt = `Hier ist relevanter Kontext aus der Wissensdatenbank:

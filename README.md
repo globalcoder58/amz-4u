@@ -55,15 +55,31 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
 
+## Deploying the frontend to AWS Amplify
+
+The SvelteKit app is exported as a static site to `build/`. Connect the repository to
+Amplify Hosting and use the root directory as the app root. The checked-in
+`amplify.yml` installs dependencies, runs the Svelte and TypeScript checks, and builds
+the site.
+
+The chat backend remains on Firebase. In the Amplify Hosting console, add a **200
+rewrite** from `/api/chat` to `https://amz-4u.web.app/api/chat` so chat requests are
+proxied to the Firebase Hosting endpoint. Keep this rule above any catch-all SPA
+rewrite. Do not add the Gemini key to Amplify; it belongs in Firebase Secret Manager.
+The chat endpoint is listed in `static/llms.txt`; update the rewrite target if the
+Firebase project or endpoint changes.
+
+For local development, the SvelteKit route proxies chat requests to the Firebase
+endpoint above.
+
 ## Deploying the chat backend
 
-Firebase Hosting serves the static SvelteKit build. The `/api/chat` endpoint runs as a
-Firebase HTTPS Function and requires the `GEMINI_API_KEY` secret:
+The Firebase HTTPS Function continues to require the `GEMINI_API_KEY` secret. Manage
+the function from its Firebase backend source workspace; this frontend deployment
+does not deploy the function.
 
 ```sh
 firebase functions:secrets:set GEMINI_API_KEY
-npm run build
-firebase deploy --only functions,hosting
 ```
 
 The Firebase project must have billing enabled for Cloud Functions. The function uses

@@ -8,7 +8,6 @@ export default defineConfig({
       adapter: adapter({
         pages: 'build',
         assets: 'build',
-        fallback: 'index.html',
         precompress: false,
         strict: false
       })

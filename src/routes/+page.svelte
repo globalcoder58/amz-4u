@@ -1,6 +1,8 @@
 
 <script lang="ts">
   import Chat from '../components/Chat.svelte';
+
+  let showChat = $state(false);
 </script>
 
 <div class="page-shell">
@@ -38,9 +40,20 @@ Whether you're starting from scratch or planning your next big move, AMAZON 4 U 
 
     </section>
 
-    <section id="chat" class="chat-section" aria-label="Chat with Lorelyn">
-      <Chat />
-    </section> 
+    <section class="chat-section" aria-label="Chat with Jeff">
+      <button
+        class="chat-toggle"
+        type="button"
+        aria-expanded={showChat}
+        aria-controls="chat-panel"
+        onclick={() => (showChat = !showChat)}
+      >
+        {showChat ? 'Close chat' : 'Chat with Jeff'}
+      </button>
+      <div id="chat-panel" hidden={!showChat}>
+        <Chat />
+      </div>
+    </section>
 
     <aside class="ai-disclosure" aria-label="AI and privacy notice">
       <span class="disclosure-icon" aria-hidden="true">✦</span>
@@ -222,15 +235,26 @@ History of Amazon</span>
   .chat-section {
     width: min(100%, 860px);
     margin: clamp(2rem, 5vw, 3.5rem) auto 0;
-    overflow: hidden;
-    text-align: left;
-    border: 1px solid rgba(173, 216, 230, 0.18);
-    border-radius: 18px;
-    background: rgba(15, 23, 42, 0.58);
-    box-shadow:
-      0 18px 55px rgba(0, 0, 0, 0.22),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(14px);
+  }
+
+  .chat-toggle {
+    min-height: 48px;
+    padding: 0.8rem 1.4rem;
+    border: 1px solid rgba(169, 223, 242, 0.35);
+    border-radius: 999px;
+    color: #08111f;
+    font: inherit;
+    font-weight: 700;
+    background: #a9dff2;
+    cursor: pointer;
+    transition:
+      background-color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .chat-toggle:hover {
+    background: #c4effb;
+    transform: translateY(-1px);
   }
 
   .ai-disclosure {
@@ -376,7 +400,6 @@ History of Amazon</span>
 
     .chat-section {
       margin-top: clamp(1.25rem, 5vw, 2rem);
-      border-radius: 14px;
     }
 
     .ai-disclosure {

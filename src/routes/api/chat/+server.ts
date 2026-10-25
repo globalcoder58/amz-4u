@@ -1,5 +1,5 @@
 
-import type { RequestHandler } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 import {
   BedrockAgentRuntimeClient,
   RetrieveAndGenerateStreamCommand,
@@ -23,7 +23,10 @@ const sessions = new Map<string, string>();
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
-    const { message, sessionId } = await request.json();
+    const body = await request.json();
+    // Accept both 'message' and 'conversationId' or 'sessionId'
+    const message = body.message;
+    const conversationId = body.conversationId || body.sessionId || 'default';
 
     if (!message) {
       return new Response(JSON.stringify({ error: 'Message is required' }), {
@@ -47,8 +50,8 @@ export const POST: RequestHandler = async ({ request }) => {
     };
 
     // Attach session ID for multi-turn conversations
-    if (sessionId && sessions.has(sessionId)) {
-      input.sessionId = sessions.get(sessionId);
+    if (conversationId && sessions.has(conversationId)) {
+      input.sessionId = sessions.get(conversationId);
     }
 
     const command = new RetrieveAndGenerateStreamCommand(input);
@@ -71,7 +74,7 @@ export const POST: RequestHandler = async ({ request }) => {
                 controller.enqueue(encoder.encode(`data: ${data}\n\n`));
               }
 
-              // Handle citations
+              // Handle citations — send as 'citations' to match frontend
               if ('citations' in event && event.citations) {
                 const citationsData = (event.citations as Citation[]).map(
                   (citation: Citation) => ({
@@ -79,24 +82,21 @@ export const POST: RequestHandler = async ({ request }) => {
                     references: citation.retrievedReferences?.map(
                       (ref: RetrievedReference) => ({
                         content: ref.content?.text,
-                        location: ref.location?.s3Location?.uri
+                        source: ref.location?.s3Location?.uri || 'Unknown source'
                       })
                     )
                   })
                 );
                 const data = JSON.stringify({
                   type: 'citations',
-                  content: citationsData
+                  citations: citationsData
                 });
                 controller.enqueue(encoder.encode(`data: ${data}\n\n`));
               }
 
               // Capture session ID for multi-turn conversations
               if ('sessionId' in event && event.sessionId) {
-                sessions.set(
-                  sessionId || 'default',
-                  event.sessionId as string
-                );
+                sessions.set(conversationId, event.sessionId as string);
               }
             }
           }

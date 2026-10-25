@@ -10,9 +10,11 @@ frontend:
         - npm run build
         # Inject runtime environment variables
         - |
-          echo "MY_ACCESS_KEY_ID=$MY_ACCESS_KEY_ID" >> build/compute/default/.env
-          echo "MY_SECRET_ACCESS_KEY=$MY_SECRET_ACCESS_KEY" >> build/compute/default/.env
-          echo "BEDROCK_KB_ID=$BEDROCK_KB_ID" >> build/compute/default/.env
+          if [ -d "build/compute/default" ]; then
+            echo "MY_ACCESS_KEY_ID=$MY_ACCESS_KEY_ID" >> build/compute/default/.env
+            echo "MY_SECRET_ACCESS_KEY=$MY_SECRET_ACCESS_KEY" >> build/compute/default/.env
+            echo "BEDROCK_KB_ID=$BEDROCK_KB_ID" >> build/compute/default/.env
+          fi
   artifacts:
     baseDirectory: build
     files:

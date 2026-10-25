@@ -23,18 +23,18 @@ Whether you're starting from scratch or planning your next big move, AMAZON 4 U 
 
       <img
         class="avatar"
-        src="/jeff.png"
-        alt="Jeff Bezos"
+        src="/Lorelyn.png"
+        alt="Lorelyn, the AI-powered guide to the Amazon marketplace"
         width="210"
         height="210"
       />
 
-      <p class="status-badge" aria-label="Jeff is available to chat">
+      <p class="status-badge" aria-label="Lorelyn is available to chat">
         <span aria-hidden="true">●</span>
        online
       </p>
 
-      <p>👋 <strong>💬 Meet Jeff, your AI-powered guide to the Amazon marketplace. .
+      <p>👋 <strong>💬 Meet Lorelyn , your AI-powered guide to the Amazon marketplace. .
 
       </strong><br />Ask questions, explore strategies, and take the guesswork out of your first steps</p>
 
@@ -48,7 +48,7 @@ Whether you're starting from scratch or planning your next big move, AMAZON 4 U 
         aria-controls="chat-panel"
         onclick={() => (showChat = !showChat)}
       >
-        {showChat ? 'Close chat' : 'Chat with Jeff'}
+        {showChat ? 'Close chat' : 'Chat with Lorelyn'}
       </button>
       <div id="chat-panel" hidden={!showChat}>
         <Chat />
@@ -93,8 +93,8 @@ History of Amazon</span>
   </main>
 
  <footer class="footer">
-    <p class="technology-credit">Created with SvelteKit and deployed on Google Firebase</p>
-
+    <p class="technology-credit">Created with SvelteKit and deployed on AWS Amplify</p>
+<p>Disclaimer: This is an independent project, not affiliated with Amazon.com, Inc.</p>
     <nav class="footer-links" aria-label="Footer navigation">
       <a href="/privacy">Privacy Policy</a>
      

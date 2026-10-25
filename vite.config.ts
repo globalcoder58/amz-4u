@@ -1,6 +1,6 @@
 
 import { sveltekit } from '@sveltejs/kit/vite';
-import adapter from '@sveltejs/adapter-auto';
+import adapter from 'amplify-adapter';
 import { defineConfig } from 'vite';
 
 export default defineConfig({

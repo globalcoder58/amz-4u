@@ -43,8 +43,7 @@ export const POST: RequestHandler = async ({ request }) => {
         type: 'KNOWLEDGE_BASE',
         knowledgeBaseConfiguration: {
           knowledgeBaseId: KNOWLEDGE_BASE_ID,
-          modelArn:
-            'arn:aws:bedrock:eu-central-1::inference-profile/eu.amazon.nova-pro-v1:0'
+         modelArn: 'arn:aws:bedrock:eu-central-1:864429128328:inference-profile/eu.amazon.nova-micro-v1:0'
         }
       }
     };

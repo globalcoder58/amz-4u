@@ -8,12 +8,28 @@ frontend:
     build:
       commands:
         - npm run build
+        # Find and inject runtime env variables
         - |
-          ENV_FILE=$(find build -name ".env" -path "*/compute/*" 2>/dev/null || true)
+          echo "Searching for .env locations..."
+          find build -type d -name "default" 2>/dev/null
+          find build -type d -name "compute" 2>/dev/null
+          ls -la build/
           if [ -d "build/compute/default" ]; then
             echo "MY_ACCESS_KEY_ID=$MY_ACCESS_KEY_ID" >> build/compute/default/.env
             echo "MY_SECRET_ACCESS_KEY=$MY_SECRET_ACCESS_KEY" >> build/compute/default/.env
             echo "BEDROCK_KB_ID=$BEDROCK_KB_ID" >> build/compute/default/.env
+            echo "Injected env vars into build/compute/default/.env"
+          else
+            echo "build/compute/default not found, searching for .env files..."
+            find build -name ".env" -type f 2>/dev/null
+            find build -name "server" -type d 2>/dev/null
+            # Try alternative paths used by amplify-adapter
+            for dir in $(find build -type d -name "default" -o -type d -name "server" 2>/dev/null); do
+              echo "MY_ACCESS_KEY_ID=$MY_ACCESS_KEY_ID" >> "$dir/.env"
+              echo "MY_SECRET_ACCESS_KEY=$MY_SECRET_ACCESS_KEY" >> "$dir/.env"
+              echo "BEDROCK_KB_ID=$BEDROCK_KB_ID" >> "$dir/.env"
+              echo "Injected env vars into $dir/.env"
+            done
           fi
   artifacts:
     baseDirectory: build

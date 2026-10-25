@@ -81,7 +81,7 @@ Whether you're starting from scratch or planning your next big move, AMAZON 4 U 
       <div class="topic-list" aria-label="Suggested discussion topics">
          <span>The Complete
 History of Amazon</span>
-        
+        <span>Starting as an Amazon seller in Germany</span>
         <span>Amazon Entry Strategy</span>
         
         <span>Brand Registry</span>

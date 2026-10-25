@@ -3,11 +3,11 @@
 > Amazon 4U provides web tools, seller resources, and automated AI utilities for e-commerce integration.
 
 ## Core Pages
-- [Home Page](https://amz-4u.web.app/): Main application overview and core features.
-- [Privacy Policy](https://amz-4u.web.app/privacy): Data processing and privacy policy details.
+- [Home Page](https://main.d3iqoblsyrv4rw.amplifyapp.com/): Main application overview and core features.
+- [Privacy Policy](https://main.d3iqoblsyrv4rw.amplifyapp.com//privacy): Data processing and privacy policy details.
 
 ## API & Services
-- [Chat API Endpoint](https://amz-4u.web.app/api/chat): AI chat integration endpoint powered by Cloud Functions.
+- [Chat API Endpoint](https://main.d3iqoblsyrv4rw.amplifyapp.com/api/chat): AI chat integration endpoint powered by Cloud Functions.
 
 ## Optional
-- [Terms of Service](https://amz-4u.web.app/policy): Terms and conditions for platform usage.
+- [Terms of Service](https://main.d3iqoblsyrv4rw.amplifyapp.com/policy): Terms and conditions for platform usage.

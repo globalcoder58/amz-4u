@@ -1,7 +1,17 @@
 {
-	"extends": "$app/tsconfig",
-	"compilerOptions": {
-		"strict": true
-	},
-	"include": ["src", "vite.config.ts"]
+  "extends": "$app/tsconfig",
+  "include": ["src", "test", "*"],
+  "exclude": ["src/service-worker", "build", "node_modules"],
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "moduleResolution": "bundler"
+  }
 }
+
